@@ -4,7 +4,7 @@ Ini adalah tugas kedua untuk kelas Golang yang diselenggarakan Hacktiv8 Indonesi
 
 ## Deskripsi
 
-Tugas ini mengenai pembuatan microservice untuk meng-update sebuah file json setiap 15 detik dengan angka random antara 1-100untuk value water dan wind. 
+Tugas ini mengenai pembuatan microservice untuk meng-update sebuah file json setiap 15 detik dengan angka random antara 1-100 untuk value water dan wind. 
 
 Dengan ketentuan:
 - jika water dibawah 5 maka status aman●jika water antara 6 - 8 maka status siaga
@@ -21,7 +21,7 @@ Dengan ketentuan:
 ## Teknologi yang dipakai
 
 - Javascript
-- HTML
+- HTML/CSS
 - Golang
 
 ## Cara menjalankan
