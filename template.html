@@ -5,68 +5,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast🌞</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>Wind Data</h1>
-    <p><b>Parameter Status</b></p>
-    <ul>
-        <li>jika water dibawah 5 maka status aman</li>
-        <li> jika water antara 6 - 8 maka status siaga</li>
-        <li> jika water diatas 8 maka status bahaya</li>
-        <li>jika wind dibawah 6 maka status aman</li>
-        <li>jika wind antara 7 - 15 maka status siaga</li>
-        <li> jika wind diatas 15 maka status bahaya</li>
-    </ul>
+    <div class="card p-2 m-5 shadow">
+        <div class="text-wrap mb-2"><button type="button" disabled class="btn btn-dark">
+                Parameter Status <span class="badge text-bg-secondary">!</span>
+            </button></div>
+        <div class="card bg-dark text-light">
+            <ul>
+                <li>jika water dibawah 5 maka status aman</li>
+                <li> jika water antara 6 - 8 maka status siaga</li>
+                <li> jika water diatas 8 maka status bahaya</li>
+                <li>jika wind dibawah 6 maka status aman</li>
+                <li>jika wind antara 7 - 15 maka status siaga</li>
+                <li> jika wind diatas 15 maka status bahaya</li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-8 p-3">
+                <p><b> Wind :</b> <span id="wind">{{.wind}}</span> m/s</p>
+                <p><b> Water :</b> <span id="water">{{.water}}</span> m</p>
+                <p><b> Status :</b> <span id="status">{{.status}}</span></p>
+            </div>
+            <div class="col-md-4 p-3">
+                <div class="card w-100" style="width: 18rem;">
 
-    <p>Update Selanjutnya : <span id="timer">15s</span></p>
-    <p id="wind">Wind: {{.wind}} m/s</p>
-    <p id="water">Water: {{.water}} m</p>
-    <p id="status">Status: {{.status}}</p>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <p>Update Selanjutnya</p>
+                        </h5>
+                        <span>
+                        <div style="width: 50px;display: inline-flex;" class="p-2 card bg-dark text-light">
+                            <div >
+                                <h2 class="text-center" id="timer">15</h2>
+                            </div>
+                        </div><b class="float-down"> Detik</b> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script>
+        function fetchData() {
+            fetch('http://localhost:8080/statusjson')
+                .then(response => response.json())
+                .then(data => {
+                    // Process fetched data here
+                    console.log(data);
+                    const container = document.getElementById('wind');
+                    container.innerHTML = `${data["wind"]}`;
+
+                    const container2 = document.getElementById('water');
+                    container2.innerHTML = `${data["water"]}`;
+
+                    const container3 = document.getElementById('status');
+                    container3.innerHTML = `${data["status"]}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+
+        // Fetch data initially
+        fetchData();
+
+        var timerElement = document.getElementById('timer');
+        var seconds = 15;
+
+        function countdown() {
+            timerElement.textContent = seconds;
+            if (seconds == 0) {
+                seconds = 15;
+                fetchData();
+            }
+            seconds--;
+        }
+
+        // Initial call to countdown
+        countdown();
+
+        // Set interval to call countdown every second
+        var timerInterval = setInterval(countdown, 1000);
+    </script>
 </body>
 
 </html>
-<script>
-    function fetchData() {
-        fetch('http://localhost:8080/statusjson')
-            .then(response => response.json())
-            .then(data => {
-                // Process fetched data here
-                console.log(data);
-                const container = document.getElementById('wind');
-                container.innerHTML = `Wind : ${data["wind"]}  m/s`;
-
-                const container2 = document.getElementById('water');
-                container2.innerHTML = `Water : ${data["water"]} m`;
-
-                const container3 = document.getElementById('status');
-                container3.innerHTML = `Status : ${data["status"]}`;
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }
-
-    // Fetch data initially
-    fetchData();
-
-    // Fetch data every 15 seconds
-    setInterval(fetchData, 15000); // 15 seconds = 15,000 milliseconds
-
-    var timerElement = document.getElementById('timer');
-    var seconds = 15;
-    
-    function countdown() {
-        timerElement.textContent = seconds + ' detik';
-        seconds--;
-        if (seconds == 0) {
-            seconds = 15;
-        }
-    }
-    
-    // Initial call to countdown
-    countdown();
-    
-    // Set interval to call countdown every second
-    var timerInterval = setInterval(countdown, 1000);
-</script>

@@ -62,13 +62,13 @@ func GetStatusJSON(w http.ResponseWriter, r *http.Request) {
 	var status = ""
 
 	if (toMap["wind"].(int) > 15) || (toMap["water"].(int) > 8) {
-		status = "bahaya"
+		status = "Bahaya"
 	} else if ((toMap["water"].(int) >= 6) && (toMap["water"].(int) <= 8)) || (toMap["wind"].(int) >= 7 && toMap["wind"].(int) <= 15) {
-		status = "siaga"
+		status = "Siaga"
 	} else if (toMap["water"].(int) <= 5) && (toMap["wind"].(int) <= 6) {
-		status = "aman"
+		status = "Aman"
 	} else {
-		status = "status tidak diketahui"
+		status = "Status tidak diketahui"
 	}
 
 	jsonData := map[string]any{
