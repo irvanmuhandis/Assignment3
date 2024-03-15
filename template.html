@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast🌞</title>
+</head>
+
+<body>
+    <h1>Wind Data</h1>
+    <p><b>Parameter Status</b></p>
+    <ul>
+        <li>jika water dibawah 5 maka status aman</li>
+        <li> jika water antara 6 - 8 maka status siaga</li>
+        <li> jika water diatas 8 maka status bahaya</li>
+        <li>jika wind dibawah 6 maka status aman</li>
+        <li>jika wind antara 7 - 15 maka status siaga</li>
+        <li> jika wind diatas 15 maka status bahaya</li>
+    </ul>
+
+    <p>Update Selanjutnya : <span id="timer">15s</span></p>
+    <p id="wind">Wind: {{.wind}} m/s</p>
+    <p id="water">Water: {{.water}} m</p>
+    <p id="status">Status: {{.status}}</p>
+</body>
+
+</html>
+<script>
+    function fetchData() {
+        fetch('http://localhost:8080/statusjson')
+            .then(response => response.json())
+            .then(data => {
+                // Process fetched data here
+                console.log(data);
+                const container = document.getElementById('wind');
+                container.innerHTML = `Wind : ${data["wind"]}  m/s`;
+
+                const container2 = document.getElementById('water');
+                container2.innerHTML = `Water : ${data["water"]} m`;
+
+                const container3 = document.getElementById('status');
+                container3.innerHTML = `Status : ${data["status"]}`;
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    // Fetch data initially
+    fetchData();
+
+    // Fetch data every 15 seconds
+    setInterval(fetchData, 15000); // 15 seconds = 15,000 milliseconds
+
+    var timerElement = document.getElementById('timer');
+    var seconds = 15;
+    
+    function countdown() {
+        timerElement.textContent = seconds + ' detik';
+        seconds--;
+        if (seconds == 0) {
+            seconds = 15;
+        }
+    }
+    
+    // Initial call to countdown
+    countdown();
+    
+    // Set interval to call countdown every second
+    var timerInterval = setInterval(countdown, 1000);
+</script>
