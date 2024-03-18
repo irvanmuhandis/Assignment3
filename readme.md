@@ -1,6 +1,6 @@
 # Assignment 3 Golang Class
 
-Ini adalah tugas kedua untuk kelas Golang yang diselenggarakan Hacktiv8 Indonesia.
+Ini adalah tugas ketiga untuk kelas Golang yang diselenggarakan Hacktiv8 Indonesia.
 
 ## Deskripsi
 
