@@ -15,8 +15,8 @@ func GetStatus(w http.ResponseWriter, r *http.Request) {
 	data := utill.FetchData()
 	toMap := utill.ConvertMap(data)
 
-	toMap["water"] = rand.Intn(10) + 1
-	toMap["wind"] = rand.Intn(18) + 1
+	toMap["water"] = rand.Intn(100) + 1
+	toMap["wind"] = rand.Intn(100) + 1
 
 	var status = ""
 
@@ -56,8 +56,8 @@ func GetStatusJSON(w http.ResponseWriter, r *http.Request) {
 	data := utill.FetchData()
 	toMap := utill.ConvertMap(data)
 
-	toMap["water"] = rand.Intn(10) + 1
-	toMap["wind"] = rand.Intn(18) + 1
+	toMap["water"] = rand.Intn(100) + 1
+	toMap["wind"] = rand.Intn(100) + 1
 
 	var status = ""
 
